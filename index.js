@@ -11,3 +11,13 @@ app.get('/', function(request, response) {
 
 users = []
 connections = []
+
+io.sockets.on('connection', socket => {
+  console.log('Connection success')
+  connections.push(socket)
+
+  socket.on('disconnect', data => {
+    connections.splice(connections.indexOf(socket), 1)
+    console.log('disconnected')
+  })
+})
